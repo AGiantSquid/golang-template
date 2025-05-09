@@ -1,0 +1,43 @@
+{
+  "name": "Go Development",
+  "dockerComposeFile": [
+    "../docker-compose.yml"
+  ],
+  "service": "app",
+  "workspaceFolder": "/app",
+  "mounts": [
+    "type=bind,source=${env:HOME}/.ssh,target=/root/.ssh",
+    "type=bind,source=/run/host-services/ssh-auth.sock,target=/ssh-agent"
+  ],
+  "remoteEnv": {
+    "SSH_AUTH_SOCK": "/ssh-agent"
+  },
+  "customizations": {
+    "vscode": {
+      "settings": {
+        "go.toolsManagement.checkForUpdates": "local",
+        "go.useLanguageServer": true,
+        "go.gopath": "/go",
+        "go.lintTool": "golangci-lint",
+        "go.formatTool": "gofmt",
+        "editor.formatOnSave": true,
+        "editor.codeActionsOnSave": {
+          "source.organizeImports": true
+        }
+      },
+      "extensions": [
+        "golang.go",
+        "ms-azuretools.vscode-docker",
+        "eamodio.gitlens",
+        "streetsidesoftware.code-spell-checker",
+        "ms-vscode.makefile-tools"
+      ]
+    }
+  },
+  "remoteUser": "root",
+  "forwardPorts": [
+    8080
+  ],
+  "overrideCommand": true,
+  "postCreateCommand": "git config --global --add safe.directory /app"
+}
